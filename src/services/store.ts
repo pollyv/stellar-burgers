@@ -1,5 +1,6 @@
+import { constructorReducer, constructorSliceName } from './constructorSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { ingredientsReducer, ingredientsSlice } from './ingredientsSlice';
+import { ingredientsReducer, ingredientsSliceName } from './ingredientsSlice';
 import { feedReducer, feedSlice } from './feedSlice';
 import { ordersReducer, ordersSlice } from './ordersSlice';
 import { orderDetailesReducer, orderDetailesSlice } from './orderDetailesSlice';
@@ -12,7 +13,8 @@ import {
 
 // Комбинируем все редьюсеры в один корневой
 const rootReducer = combineReducers({
-  [ingredientsSlice.name]: ingredientsReducer,
+  [ingredientsSliceName]: ingredientsReducer,
+  [constructorSliceName]: constructorReducer,
   [feedSlice.name]: feedReducer,
   [ordersSlice.name]: ordersReducer,
   [orderDetailesSlice.name]: orderDetailesReducer

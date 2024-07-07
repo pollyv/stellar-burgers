@@ -18,12 +18,15 @@ const initialState: IIngredientsState = {
 
 // Создаем асинхронный Thunk для получения данных ингредиентов
 export const getIngredients = createAsyncThunk(
-  'burgerIngredients/fetchBurgerIngredients',
-  async () => getIngredientsApi() // Вызов API для получения данных
+  'ingredients/fetchIngredients',
+  async () => {
+    const response = await getIngredientsApi();
+    return response;
+  }
 );
 
 // Создаем слайс для управления состоянием ингредиентов
-export const ingredientsSlice = createSlice({
+const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
   reducers: {},
@@ -56,6 +59,7 @@ export const ingredientsSlice = createSlice({
 
 // Экспортируем редьюсер и селекторы
 export const ingredientsReducer = ingredientsSlice.reducer;
+export const ingredientsSliceName = ingredientsSlice.name;
 export const {
   getIngredientsSelector,
   getLoadingSelector,
