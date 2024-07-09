@@ -49,7 +49,7 @@ const ingredientsSlice = createSlice({
         state.ingredients = action.payload;
         state.isLoading = false;
       })
-      .addCase(getIngredients.rejected, (state, action) => {
+      .addCase(getIngredients.rejected, (state) => {
         // Обработчик для ошибки при выполнении запроса
         state.isLoading = false;
         state.error = 'Ingredients Error';

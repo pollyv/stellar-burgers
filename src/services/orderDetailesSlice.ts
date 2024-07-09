@@ -1,5 +1,5 @@
+import { getOrderByNumberApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { orderBurgerApi } from '@api';
 import { TOrder } from '@utils-types';
 
 // Определяем интерфейс состояния для детализации заказа
@@ -15,16 +15,23 @@ export const initialState: IOrderDetailesState = {
 };
 
 // Создаем асинхронный Thunk для получения детализации заказа
-const fetchDetailesOrder = createAsyncThunk(
-  'orderDetail/fetchDetailOrder',
-  async (id: string[]) => orderBurgerApi(id)
+export const fetchDetailesOrder = createAsyncThunk(
+  'orderDetailes/fetchDetailOrder',
+  async (numberOrder: number, { dispatch }) => {
+    dispatch(clearOrderState());
+    return getOrderByNumberApi(numberOrder);
+  }
 );
 
 // Создаем слайс для управления состоянием детализации заказа
-export const orderDetailesSlice = createSlice({
-  name: 'orderDetails',
+const orderDetailesSlice = createSlice({
+  name: 'orderDetailes',
   initialState,
-  reducers: {},
+  reducers: {
+    clearOrderState: (state) => {
+      state.order = null;
+    }
+  },
   selectors: {
     getOrder: (state) => state.order
   },
@@ -37,11 +44,11 @@ export const orderDetailesSlice = createSlice({
       })
       .addCase(fetchDetailesOrder.fulfilled, (state, action) => {
         // Обработчик для успешного выполнения запроса
-        state.order = action.payload.order;
+        state.order = action.payload.orders[0];
       })
       .addCase(fetchDetailesOrder.rejected, (state, action) => {
         // Обработчик для ошибки при выполнении запроса
-        state.error = action.error.message || 'Orders detailes Error';
+        state.error = 'Orders detailes Error';
       });
   }
 });
@@ -49,3 +56,5 @@ export const orderDetailesSlice = createSlice({
 // Экспортируем редьюсер и селектор для использования в приложении
 export const orderDetailesReducer = orderDetailesSlice.reducer;
 export const { getOrder } = orderDetailesSlice.selectors;
+export const { clearOrderState } = orderDetailesSlice.actions;
+export const orderDetailesName = orderDetailesSlice.name;

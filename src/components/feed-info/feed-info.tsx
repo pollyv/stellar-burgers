@@ -1,7 +1,8 @@
+import { getFeedState } from '../../services/feedSlice';
 import { FC } from 'react';
-
-import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '../ui/feed-info';
+import { TOrder } from '@utils-types';
+import { useSelector } from '../../services/store';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders
@@ -9,10 +10,12 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
     .map((item) => item.number)
     .slice(0, 20);
 
+// Компонент FeedInfo
 export const FeedInfo: FC = () => {
-  /** TODO: взять переменные из стора */
-  const orders: TOrder[] = [];
-  const feed = {};
+  // Получаем заказы из состояния, общее кол-во заказов и кол-во за сегодня
+  const { orders, total, totalToday } = useSelector(getFeedState);
+  // Создаем объект с информацией о заказах
+  const feed = { total, totalToday };
 
   const readyOrders = getOrders(orders, 'done');
 

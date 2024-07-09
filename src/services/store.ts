@@ -1,9 +1,8 @@
 import { constructorReducer, constructorSliceName } from './constructorSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { ingredientsReducer, ingredientsSliceName } from './ingredientsSlice';
-import { feedReducer, feedSlice } from './feedSlice';
-import { ordersReducer, ordersSlice } from './ordersSlice';
-import { orderDetailesReducer, orderDetailesSlice } from './orderDetailesSlice';
+import { feedReducer, feedSliceName } from './feedSlice';
+import { orderDetailesName, orderDetailesReducer } from './orderDetailesSlice';
 import { ThunkAction, ThunkDispatch, thunk } from 'redux-thunk';
 import {
   TypedUseSelectorHook,
@@ -15,9 +14,8 @@ import {
 const rootReducer = combineReducers({
   [ingredientsSliceName]: ingredientsReducer,
   [constructorSliceName]: constructorReducer,
-  [feedSlice.name]: feedReducer,
-  [ordersSlice.name]: ordersReducer,
-  [orderDetailesSlice.name]: orderDetailesReducer
+  [feedSliceName]: feedReducer,
+  [orderDetailesName]: orderDetailesReducer
 });
 
 // Хранилище Redux с указанными редьюсерами

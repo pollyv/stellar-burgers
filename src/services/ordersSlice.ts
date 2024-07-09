@@ -20,7 +20,7 @@ const fetchOrders = createAsyncThunk('orders/fetchOrders', async () =>
 );
 
 // Создаем слайс для управления состоянием заказов
-export const ordersSlice = createSlice({
+const ordersSlice = createSlice({
   name: 'orders',
   initialState,
   reducers: {},
@@ -39,13 +39,14 @@ export const ordersSlice = createSlice({
         // Обработчик для успешного выполнения запроса
         state.orders = action.payload;
       })
-      .addCase(fetchOrders.rejected, (state, action) => {
+      .addCase(fetchOrders.rejected, (state) => {
         // Обработчик для ошибки при выполнении запроса
-        state.error = action.error.message || 'Order history Error';
+        state.error = 'Order history Error';
       });
   }
 });
 
 // Экспортируем редьюсер и селектор для использования в приложении
 export const ordersReducer = ordersSlice.reducer;
+export const ordersSliceName = ordersSlice.name;
 export const { getOrders } = ordersSlice.selectors;
