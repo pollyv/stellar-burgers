@@ -12,35 +12,82 @@ import {
   NotFound404
 } from '@pages';
 import { getIngredients } from '../../services/ingredientsSlice';
+import { ProtectedRoute } from '../protected-route';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import styles from './app.module.css';
-import { useEffect, useMemo } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from '../../services/store';
+import { verifyUserAuth } from '../../services/userSlice';
 
-const App = () => {
+const App: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Получаесм состояние background из location
   const backgroundLocation = location.state?.background;
 
-  // Используем useEffect для диспатча действия getIngredients при монтировании компонента
+  // useEffect для выполнения начальной загрузки данных
   useEffect(() => {
     dispatch(getIngredients());
+    dispatch(verifyUserAuth());
   }, [dispatch]);
 
+  // Основная разметка с маршрутизацией
   return (
     <div className={styles.app}>
-      {/* Определяем основные маршруты приложения */}
       <Routes location={backgroundLocation || location}>
         <Route path='/' element={<AppHeader />}>
           <Route index element={<ConstructorPage />} />
           <Route path='feed' element={<Feed />} />
-          <Route path='login' element={<Login />} />
-          <Route path='register' element={<Register />} />
-          <Route path='forgot-password' element={<ForgotPassword />} />
-          <Route path='reset-password' element={<ResetPassword />} />
-          <Route path='profile/' element={<Profile />}>
-            <Route path='orders' element={<ProfileOrders />} />
+          <Route
+            path='login'
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <Login />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='register'
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <Register />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='forgot-password'
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <ForgotPassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='reset-password'
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <ResetPassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='profile/'
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          >
+            <Route
+              path='orders'
+              element={
+                <ProtectedRoute>
+                  <ProfileOrders />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           <Route path='*' element={<NotFound404 />} />
         </Route>
@@ -48,7 +95,6 @@ const App = () => {
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/profile/orders/:number' element={<OrderInfo />} />
       </Routes>
-      {/* Определяем маршруты для отображения в модальных окнах */}
       {backgroundLocation && (
         <Routes>
           <Route

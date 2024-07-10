@@ -1,8 +1,10 @@
+import { authUserReducer, authUserSliceName } from './userSlice';
 import { constructorReducer, constructorSliceName } from './constructorSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { ingredientsReducer, ingredientsSliceName } from './ingredientsSlice';
 import { feedReducer, feedSliceName } from './feedSlice';
-import { orderDetailesName, orderDetailesReducer } from './orderDetailesSlice';
+import { orderDetailsName, orderDetailsReducer } from './ordersDetailsSlice';
+import { ordersReducer, ordersSliceName } from './ordersUserSlice';
 import { ThunkAction, ThunkDispatch, thunk } from 'redux-thunk';
 import {
   TypedUseSelectorHook,
@@ -15,7 +17,9 @@ const rootReducer = combineReducers({
   [ingredientsSliceName]: ingredientsReducer,
   [constructorSliceName]: constructorReducer,
   [feedSliceName]: feedReducer,
-  [orderDetailesName]: orderDetailesReducer
+  [orderDetailsName]: orderDetailsReducer,
+  [authUserSliceName]: authUserReducer,
+  [ordersSliceName]: ordersReducer
 });
 
 // Хранилище Redux с указанными редьюсерами
@@ -29,9 +33,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 // Определяем тип для dispatch
 export type AppDispatch = typeof store.dispatch;
-
 export const useDispatch: () => AppDispatch = () => dispatchHook();
-
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 export default store;

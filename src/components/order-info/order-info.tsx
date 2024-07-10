@@ -1,9 +1,6 @@
 import { getIngredientsSelector } from '../../services/ingredientsSlice';
 import { FC, useMemo, useEffect } from 'react';
-import {
-  fetchDetailesOrder,
-  getOrder
-} from '../../services/orderDetailesSlice';
+import { getDetailsOrder, getOrder } from '../../services/ordersDetailsSlice';
 import { OrderInfoUI } from '../ui/order-info';
 import { Preloader } from '../ui/preloader';
 import { TIngredient } from '@utils-types';
@@ -18,7 +15,7 @@ export const OrderInfo: FC = () => {
 
   // Используем useEffect для диспатча действия fetchDetailesOrder при монтировании компонента
   useEffect(() => {
-    dispatch(fetchDetailesOrder(id));
+    dispatch(getDetailsOrder(id));
   }, [dispatch, id]);
 
   const orderData = useSelector(getOrder); // Получение данных заказа из Redux store

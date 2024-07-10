@@ -1,38 +1,52 @@
-import { FC, useMemo } from 'react';
-import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
+import {
+  clearIngredients,
+  getIngredientsSelector
+} from '../../services/constructorSlice';
+import {
+  clearOrderState,
+  makeOrder,
+  getOrder,
+  getOrderRequest
+} from '../../services/ordersDetailsSlice';
+import { FC, useMemo } from 'react';
+import { getUserData } from '../../services/userSlice';
+import { TConstructorIngredient } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
-import { getIngredientsSelector } from '../../services/constructorSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
-  const constructorItems = useSelector(getIngredientsSelector); // Получаем ингредиенты конструктора из стора
+  const userData = useSelector(getUserData);
   const navigate = useNavigate();
-  const orderRequest = false; // Флаг для определения состояния запроса на заказ (может быть заменен на значение из стора)
+  const constructorItems = useSelector(getIngredientsSelector);
+  const orderRequest = useSelector(getOrderRequest);
+  const orderModalData = useSelector(getOrder);
 
-  const orderModalData = null; // Данные модального окна заказа (может быть заменен на значение из стора)
-
-  /**
-   * Обработчик клика на кнопку заказа
-   * Если булочки нет или идет запрос на заказ, функция ничего не делает
-   */
+  // Обработчик клика на кнопку заказа
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
-    // Здесь будет логика для оформления заказа
+    if (!userData) {
+      navigate('/login', { replace: true });
+      return;
+    }
+    const ingredientsId = [
+      constructorItems.bun._id,
+      ...constructorItems.ingredients.map((item) => item._id)
+    ];
+    dispatch(makeOrder(ingredientsId))
+      .unwrap()
+      .then(() => {
+        dispatch(clearIngredients());
+      });
   };
 
-  /**
-   * Обработчик закрытия модального окна заказа
-   */
+  // Обработчик закрытия модального окна заказа
   const closeOrderModal = () => {
-    // Здесь будет логика для закрытия модального окна
+    dispatch(clearOrderState());
   };
 
-  /**
-   * Вычисление общей стоимости заказа
-   * Учитывается цена булочки (удвоенная) и всех ингредиентов
-   */
+  // Вычисление общей стоимости заказа
   const price = useMemo(
     () =>
       (constructorItems.bun ? constructorItems.bun.price * 2 : 0) +
@@ -45,12 +59,12 @@ export const BurgerConstructor: FC = () => {
 
   return (
     <BurgerConstructorUI
-      price={price} // Общая стоимость заказа
-      orderRequest={orderRequest} // Флаг состояния запроса на заказ
-      constructorItems={constructorItems} // Ингредиенты конструктора
-      orderModalData={orderModalData} // Данные для модального окна заказа
-      onOrderClick={onOrderClick} // Обработчик клика на кнопку заказа
-      closeOrderModal={closeOrderModal} // Обработчик закрытия модального окна
+      price={price}
+      orderRequest={orderRequest}
+      constructorItems={constructorItems}
+      orderModalData={orderModalData}
+      onOrderClick={onOrderClick}
+      closeOrderModal={closeOrderModal}
     />
   );
 };
