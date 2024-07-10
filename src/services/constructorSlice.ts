@@ -42,7 +42,8 @@ const burgerConstructorSlice = createSlice({
     },
     // Редьюсер для очистки конструктора
     clearIngredients: (state) => {
-      state = initialState; // Возвращаем начальное состояние
+      state.bun = null;
+      state.ingredients = [];
     },
     // Редьюсер для изменения порядка ингредиентов
     changeIngredientsOrder: (state, action) => {

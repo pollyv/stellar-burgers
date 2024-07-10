@@ -37,7 +37,11 @@ export const BurgerConstructor: FC = () => {
     dispatch(makeOrder(ingredientsId))
       .unwrap()
       .then(() => {
-        dispatch(clearIngredients());
+        dispatch(clearIngredients()); // Очищаем конструктор после успешного заказа
+      })
+      .catch((error) => {
+        console.error('Не удалось оформить заказ:', error);
+        // Опционально можно обработать ошибку, например, показать уведомление пользователю
       });
   };
 
