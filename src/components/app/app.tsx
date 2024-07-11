@@ -12,6 +12,7 @@ import {
   NotFound404
 } from '@pages';
 import { getIngredients } from '../../services/ingredientsSlice';
+import { PageDetailsComponent } from '../../pages/page-details/page-details';
 import { ProtectedRoute } from '../protected-route';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import styles from './app.module.css';
@@ -79,21 +80,43 @@ const App: FC = () => {
                 <Profile />
               </ProtectedRoute>
             }
-          >
-            <Route
-              path='orders'
-              element={
-                <ProtectedRoute>
-                  <ProfileOrders />
-                </ProtectedRoute>
-              }
-            />
-          </Route>
+          />
+          <Route
+            path='profile/orders'
+            element={
+              <ProtectedRoute>
+                <ProfileOrders />
+              </ProtectedRoute>
+            }
+          />
           <Route path='*' element={<NotFound404 />} />
+          <Route
+            path='/feed/:number'
+            element={
+              <PageDetailsComponent title='Детали заказа'>
+                <OrderInfo />
+              </PageDetailsComponent>
+            }
+          />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <PageDetailsComponent title='Детали ингридиента'>
+                <IngredientDetails />
+              </PageDetailsComponent>
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute>
+                <PageDetailsComponent title='Детали заказа'>
+                  <OrderInfo />
+                </PageDetailsComponent>
+              </ProtectedRoute>
+            }
+          />
         </Route>
-        <Route path='/feed/:number' element={<OrderInfo />} />
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
-        <Route path='/profile/orders/:number' element={<OrderInfo />} />
       </Routes>
       {backgroundLocation && (
         <Routes>
@@ -119,12 +142,14 @@ const App: FC = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal
-                title='Информация о заказе'
-                onClose={() => navigate('/profile/orders')}
-              >
-                <OrderInfo />
-              </Modal>
+              <ProtectedRoute>
+                <Modal
+                  title='Информация о заказе'
+                  onClose={() => navigate('/profile/orders')}
+                >
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
             }
           />
         </Routes>
@@ -132,5 +157,4 @@ const App: FC = () => {
     </div>
   );
 };
-
 export default App;
