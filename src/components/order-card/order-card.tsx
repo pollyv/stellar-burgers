@@ -1,17 +1,22 @@
+import { getIngredientsSelector } from '../../services/ingredientsSlice';
 import { FC, memo, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
-
 import { OrderCardProps } from './type';
-import { TIngredient } from '@utils-types';
 import { OrderCardUI } from '../ui/order-card';
+import { TIngredient } from '@utils-types';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from '../../services/store';
 
 const maxIngredients = 6;
 
+// Отвечает за отображение карточки заказа
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
+  // Получаем текущий путь для правильной навигации
   const location = useLocation();
 
-  /** TODO: взять переменную из стора */
-  const ingredients: TIngredient[] = [];
+  // Получаем все ингредиенты и фильтруем их по списку ингредиентов заказа
+  const ingredients: TIngredient[] = useSelector(getIngredientsSelector).filter(
+    (ingredient) => order.ingredients.includes(ingredient._id)
+  );
 
   const orderInfo = useMemo(() => {
     if (!ingredients.length) return null;
