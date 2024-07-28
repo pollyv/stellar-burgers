@@ -13,7 +13,7 @@ import {
 } from 'react-redux';
 
 // Комбинируем все редьюсеры в один корневой
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   [ingredientsSliceName]: ingredientsReducer,
   [constructorSliceName]: constructorReducer,
   [feedSliceName]: feedReducer,

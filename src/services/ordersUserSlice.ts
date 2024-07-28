@@ -21,7 +21,7 @@ export const getUserOrders = createAsyncThunk(
 );
 
 // Слайс заказов пользователя
-const handleUserOrdersSlice = createSlice({
+export const handleUserOrdersSlice = createSlice({
   name: 'userOrders',
   initialState,
   reducers: {},

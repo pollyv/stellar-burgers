@@ -10,7 +10,7 @@ interface IIngredientsState {
 }
 
 // Начальное состояние
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
   ingredients: [],
   isLoading: false,
   error: null
@@ -26,7 +26,7 @@ export const getIngredients = createAsyncThunk(
 );
 
 // Создаем слайс для управления состоянием ингредиентов
-const ingredientsSlice = createSlice({
+export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
   reducers: {},
@@ -65,3 +65,5 @@ export const {
   getLoadingSelector,
   getIngredientsErrorSelector
 } = ingredientsSlice.selectors;
+
+export default ingredientsSlice.reducer;

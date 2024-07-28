@@ -103,7 +103,7 @@ export const logoutUser = createAsyncThunk('authUser/logoutUser', async () =>
   logoutApi()
 );
 
-const authUserSlice = createSlice({
+export const authUserSlice = createSlice({
   name: 'authUser',
   initialState,
   reducers: {

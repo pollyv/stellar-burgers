@@ -9,13 +9,13 @@ export interface IConstructorState {
 }
 
 // Начальное состояние
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
   bun: null,
   ingredients: []
 };
 
 // Создаем слайс для управления состоянием конструктора бургера
-const burgerConstructorSlice = createSlice({
+export const burgerConstructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
@@ -68,4 +68,6 @@ export const {
   clearIngredients,
   changeIngredientsOrder
 } = burgerConstructorSlice.actions;
+export const BurgerConstructorActions = burgerConstructorSlice.actions;
 export const { getIngredientsSelector } = burgerConstructorSlice.selectors;
+export default burgerConstructorSlice.reducer;
