@@ -11,7 +11,7 @@ interface IOrderDetailsState {
 }
 
 // Начальное состояние
-const initialState: IOrderDetailsState = {
+export const initialState: IOrderDetailsState = {
   order: null,
   orderRequest: false,
   errorDetailsOrder: null,
@@ -38,7 +38,7 @@ export const makeOrder = createAsyncThunk(
 );
 
 // Создание slice для управления состоянием заказа
-const orderSlice = createSlice({
+export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
@@ -88,3 +88,5 @@ export const { clearOrderState } = orderSlice.actions;
 export const orderDetailsReducer = orderSlice.reducer;
 export const orderDetailsName = orderSlice.name;
 export const { getOrder, getOrderRequest } = orderSlice.selectors;
+
+export default orderSlice.reducer;

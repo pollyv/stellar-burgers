@@ -6,7 +6,7 @@ import { useDispatch } from '../../services/store';
 import { useLocation } from 'react-router-dom';
 
 export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
-  ({ ingredient, count }) => {
+  ({ ingredient, count, 'data-cy': dataCy }) => {
     const location = useLocation(); // Получаем текущий путь, чтобы передать его в состояние при навигации
     const dispatch = useDispatch(); // Хук для отправки действий в стор
 
@@ -23,6 +23,7 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
         count={count} // Передаем количество ингредиента в UI компонент
         locationState={{ background: location }} // Передаем текущее состояние пути в UI компонент
         handleAdd={handleAdd} // Передаем обработчик добавления ингредиента в UI компонент
+        data-cy={dataCy}
       />
     );
   }

@@ -1,0 +1,48 @@
+{
+  "success": true,
+  "name": "Краторный spicy био-марсианский бургер",
+  "order": {
+    "_id": "667beabd856777001bb1dddf",
+    "number": 47647,
+    "owner": {
+      "name": "Polina",
+      "email": "polino4kaveselova@yandex.ru",
+      "createdAt": "2024-07-10T06:07:07.133Z",
+      "updatedAt": "2024-07-13T09:42:09.305Z"
+    },
+    "ingredients": [
+      {
+        "_id": "643d69a5c3f7b9001cfa093e",
+        "name": "Филе Люминесцентного тетраодонтимформа",
+        "type": "main",
+        "calories": 643,
+        "carbohydrates": 85,
+        "fat": 26,
+        "image": "https://code.s3.yandex.net/react/code/meat-03.png",
+        "image_large": "https://code.s3.yandex.net/react/code/meat-03-large.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
+        "price": 988,
+        "proteins": 44,
+        "__v": 0
+      },
+      {
+        "_id": "643d69a5c3f7b9001cfa093d",
+        "name": "Флюоресцентная булка R2-D3",
+        "type": "bun",
+        "calories": 643,
+        "carbohydrates": 85,
+        "fat": 26,
+        "image": "https://code.s3.yandex.net/react/code/bun-01.png",
+        "image_large": "https://code.s3.yandex.net/react/code/bun-01-large.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
+        "price": 988,
+        "proteins": 44,
+        "__v": 0
+      }
+    ],
+    "status": "done",
+    "createdAt": "2024-07-26T10:17:33.687Z",
+    "updatedAt": "2024-07-26T10:17:34.151Z",
+    "price": 1976
+  }
+}

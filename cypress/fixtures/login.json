@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "user": {
+    "email": "polino4kaveselova@yandex.ru",
+    "name": "Polina"
+  },
+  "email": "polino4kaveselova@yandex.ru",
+  "name": "Polina",
+  "accessToken": "token test of access for cypress",
+  "refreshToken": "refresh token test for cypress"
+}
